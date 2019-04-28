@@ -1,0 +1,47 @@
+/*
+ * Empty Stylesheet file.
+ */
+.pane {
+    -fx-background-color: rgb(0,0,0);
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;    
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+
+.add-button {
+    -fx-background-color: #F05228;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;    
+}
+
+.add-button:pressed {
+    -fx-opacity: 0.8;
+}
+
+.task-header {
+    -fx-border-color: rgba(255,255,255,0.25);
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.task-input {
+    -fx-background-color: rgba(255,255,255,0.25);
+    -fx-text-fill: white;
+    -fx-font-size: 18;
+}
+
+.cancel-button {
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-text-fill: rgba(255,255,255,0.25);
+    -fx-font-size: 16;    
+}
+
+.enter-button {
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-text-fill: #F05228;
+    -fx-font-size: 16;    
+}
+
+.button:pressed {
+    -fx-opacity: 0.8;    
+}
