@@ -1,21 +1,30 @@
 package controllers;
 
+import dao.Task;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -23,6 +32,13 @@ public class UiController implements Initializable {
 
     double x = 0;
     double y = 0;
+
+    double setSmallX = 0;
+    double setSmallY = 0;
+
+    private Task curreTask;
+
+    private ObservableList<Task> tasks = FXCollections.observableArrayList();
 
     @FXML
     private AnchorPane root;
@@ -47,16 +63,10 @@ public class UiController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            inputTodo.setVisible(false);
-            cancelButton.setVisible(false);
-            addTaskButton.setVisible(false);
-            FXMLLoader loader = new FXMLLoader(new File("./src/fxmls/Item.fxml").toURI().toURL());
-            taskContainer.getChildren().add(loader.load());
-            setupListeners();
-        } catch (IOException ex) {
-            Logger.getLogger(UiController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        inputTodo.setVisible(false);
+        cancelButton.setVisible(false);
+        addTaskButton.setVisible(false);
+        setupListeners();
     }
 
     @FXML
@@ -72,6 +82,20 @@ public class UiController implements Initializable {
         root.setOnMouseDragged(this::updateWindowPosition);
         showInputButton.setOnMouseClicked(this::toggleAddTodoInput);
         cancelButton.setOnMouseClicked(this::toggleAddTodoInput);
+        addTaskButton.setOnMouseClicked(this::addTask);
+        inputTodo.setOnAction(this::addTask);
+        taskContainer.getChildren().addListener(new ListChangeListener<Node>() {
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends Node> c) {
+                c.getList().stream().forEach(child -> {
+                    child.setOnMouseClicked(value -> {
+                        if (value.getClickCount() >= 2) {
+                            c.getList().remove(child);
+                        }
+                    });
+                });
+            }
+        });
     }
 
     private void updateWindowPosition(MouseEvent value) {
@@ -95,6 +119,24 @@ public class UiController implements Initializable {
             cancelButton.setVisible(true);
             addTaskButton.setVisible(true);
         }
+    }
+
+    private void addTask(Event event) {
+        try {
+            if (inputTodo.getText().length() > 0) {
+                FXMLLoader loader = new FXMLLoader(new File("./src/fxmls/Item.fxml").toURI().toURL());
+                HBox box = loader.load();
+                ItemController controller = loader.getController();
+                controller.setTodo(inputTodo.getText());
+                taskContainer.getChildren().add(box);
+                inputTodo.clear();
+            }
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(UiController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(UiController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

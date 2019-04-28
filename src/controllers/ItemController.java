@@ -7,17 +7,11 @@ package controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.property.StringPropertyBase;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 
 /**
  * FXML Controller class
@@ -25,6 +19,9 @@ import javafx.scene.control.Label;
  * @author aditya
  */
 public class ItemController implements Initializable {
+
+    @FXML
+    private HBox item;
 
     @FXML
     private CheckBox checkBox;
@@ -40,9 +37,16 @@ public class ItemController implements Initializable {
         setupListeners();
     }
 
-    private void setupListeners() {        
+    private void setupListeners() {
+        item.setOnMouseClicked(value -> {
+            checkBox.setSelected(!checkBox.selectedProperty().get());
+        });
         checkBox.selectedProperty().addListener(
                 (observable, oldValue, newValue) -> taskText.getChildrenUnmodifiable().get(0).setStyle("-fx-strikethrough: " + newValue));
+    }
+
+    public void setTodo(String text) {
+        this.taskText.setText(text);
     }
 
 }

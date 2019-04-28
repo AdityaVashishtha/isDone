@@ -28,7 +28,7 @@ public class IsDone extends Application {
 
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
-        scene.setRoot(root);
+        scene.setRoot(root);                
 
         primaryStage.setTitle("isDone!!");
         primaryStage.sizeToScene();

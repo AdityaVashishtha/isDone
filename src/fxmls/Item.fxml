@@ -10,7 +10,7 @@
 <?import javafx.geometry.Insets?>
 
 
-<HBox maxWidth="1.7976931348623157E308" styleClass="task-item" stylesheets="@../assets/item.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ItemController">
+<HBox fx:id="item" maxWidth="1.7976931348623157E308" styleClass="task-item" stylesheets="@../assets/item.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ItemController">
     <children>
         <CheckBox fx:id="checkBox" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="58.0" prefWidth="26.0" styleClass="tick">
             <font>
