@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -14,7 +13,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -84,17 +82,16 @@ public class UiController implements Initializable {
         cancelButton.setOnMouseClicked(this::toggleAddTodoInput);
         addTaskButton.setOnMouseClicked(this::addTask);
         inputTodo.setOnAction(this::addTask);
-        taskContainer.getChildren().addListener(new ListChangeListener<Node>() {
-            @Override
-            public void onChanged(ListChangeListener.Change<? extends Node> c) {
-                c.getList().stream().forEach(child -> {
-                    child.setOnMouseClicked(value -> {
-                        if (value.getClickCount() >= 2) {
-                            c.getList().remove(child);
-                        }
-                    });
-                });
-            }
+        taskContainer.getChildren().addListener(this::doubleClickToDeleteItem);
+    }
+
+    private void doubleClickToDeleteItem(ListChangeListener.Change<? extends Node> c) {
+        c.getList().stream().forEach(child -> {
+            child.addEventFilter(MouseEvent.MOUSE_CLICKED, value -> {
+                if (value.getClickCount() >= 2) {
+                    c.getList().remove(child);
+                }
+            });
         });
     }
 

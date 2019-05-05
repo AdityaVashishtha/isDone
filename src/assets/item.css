@@ -1,8 +1,23 @@
 
 .task-item {
     -fx-border-color: rgba(255,255,255,0.25);
-    -fx-border-style: solid;
-    -fx-border-width: 0 0 1px 0;
+    -fx-border-style: solid;    
+    -fx-border-width: 0 0 1px 0;    
+    -fx-background-color: #000;    
+}
+
+#imageView {        
+    -fx-background-image: url("list.png");        
+    -fx-background-size: 40px;
+    -fx-background-repeat: stretch;
+    -fx-background-position: center;
+    -fx-border-radius: 50;
+}
+
+#imageView:pressed {
+    -fx-background-color: rgba(255,255,255,0.25);
+    -fx-background-radius: 50;
+    -fx-transition: all 1s;
 }
 
 .tick .box {
